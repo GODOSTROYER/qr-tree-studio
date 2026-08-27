@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yōsei — Living QR Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#1e2722; --muted:#768079; --line:#dfe5df; --paper:#f7f8f5; --green:#1f9b68; --deep:#163c2c; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family:Manrope,system-ui,sans-serif; }
+    .shell { width:min(1320px, calc(100% - 48px)); margin:auto; }
+    header { height:84px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+    .brand { display:flex; gap:12px; align-items:center; font-weight:800; letter-spacing:-.04em; font-size:22px; }
+    .mark { width:30px; height:30px; border-radius:50% 50% 50% 6px; background:linear-gradient(135deg,#a6e16c,#209861); transform:rotate(-45deg); position:relative; }
+    .mark:after { content:""; position:absolute; height:18px; width:2px; background:#fff; left:14px; top:7px; transform:rotate(45deg); opacity:.75; }
+    nav { display:flex; align-items:center; gap:28px; color:#7b837d; font-size:13px; }
+    nav a { text-decoration:none; color:inherit; } nav a.active { color:var(--ink); font-weight:700; }
+    .pill { border:1px solid var(--line); border-radius:20px; padding:10px 15px; color:var(--ink); background:#fff; }
+    main { display:grid; grid-template-columns:410px 1fr; gap:68px; padding:52px 0 64px; }
+    .eyebrow { font:500 11px 'DM Mono',monospace; color:var(--green); letter-spacing:.18em; text-transform:uppercase; margin-bottom:15px; }
+    h1 { font-size:clamp(40px,5vw,66px); line-height:.98; letter-spacing:-.075em; margin:0 0 20px; max-width:520px; }
+    .intro { color:var(--muted); line-height:1.7; font-size:14px; max-width:390px; margin-bottom:34px; }
+    .field-label { display:block; font:500 11px 'DM Mono',monospace; text-transform:uppercase; letter-spacing:.12em; margin:22px 0 9px; color:#657069; }
+    input[type=text] { width:100%; border:1px solid var(--line); border-radius:10px; padding:15px 16px; background:#fff; color:var(--ink); font:14px Manrope; outline:none; }
+    input[type=text]:focus { border-color:#77c7a0; box-shadow:0 0 0 3px #dff4e8; }
+    .swatches { display:flex; gap:10px; flex-wrap:wrap; }
+    button { font:600 12px Manrope; cursor:pointer; border:0; }
+    .swatch { width:38px; height:38px; border-radius:50%; border:3px solid #fff; outline:1px solid var(--line); padding:0; }
+    .swatch.selected { outline:2px solid var(--green); outline-offset:2px; }
+    .theme-row { display:flex; gap:8px; }
+    .theme { flex:1; padding:11px 8px; border:1px solid var(--line); background:#fff; border-radius:8px; color:#68736c; }
+    .theme.selected { border-color:var(--green); color:var(--deep); background:#eaf7ef; }
+    .range-row { display:flex; justify-content:space-between; gap:16px; align-items:center; color:#66716a; font-size:12px; }
+    input[type=range] { accent-color:var(--green); width:100%; }
+    .stage { min-height:590px; border-radius:24px; background:#e5f0e5; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .stage:before,.stage:after { content:""; position:absolute; border-radius:50%; filter:blur(1px); opacity:.38; }
+    .stage:before { width:520px; height:520px; background:radial-gradient(circle,#fff 0 3%,transparent 4%), radial-gradient(circle,#b9dbbe,transparent 64%); background-size:34px 34px,100% 100%; top:-160px; right:-110px; }
+    .stage:after { width:300px; height:300px; background:#c0dec1; bottom:-170px; left:-70px; filter:blur(30px); }
+    .stage-inner { z-index:1; text-align:center; width:min(88%,590px); }
+    .season-tag { color:#528365; font:500 11px 'DM Mono'; letter-spacing:.16em; text-transform:uppercase; margin-bottom:14px; }
+    canvas { width:min(100%,500px); height:auto; display:block; margin:auto; filter:drop-shadow(0 18px 22px rgba(37,81,49,.15)); }
+    .caption { margin-top:12px; color:#5f7665; font-size:12px; }
+    .actions { display:flex; justify-content:center; gap:10px; margin-top:20px; }
+    .primary { background:var(--deep); color:#fff; padding:13px 20px; border-radius:8px; }
+    .secondary { background:#fff; color:var(--deep); padding:13px 20px; border-radius:8px; border:1px solid #d1ddd2; }
+    .status { margin-top:13px; min-height:18px; color:#a34c42; font-size:12px; }
+    footer { border-top:1px solid var(--line); padding:18px 0 30px; color:#8a938d; font-size:11px; display:flex; justify-content:space-between; }
+    @media(max-width:900px){ main{grid-template-columns:1fr;gap:38px;padding-top:36px}.stage{min-height:500px}.shell{width:min(100% - 30px,650px)}nav a:not(.pill){display:none}header{height:70px} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><div class="brand"><span class="mark"></span> yōsei</div><nav><a class="active" href="#studio">Studio</a><a href="#about">About</a><a class="pill" href="#studio">Create yours ↗</a></nav></header>
+    <main id="studio">
+      <section class="controls">
+        <div class="eyebrow">A living link</div>
+        <h1>Make your link grow.</h1>
+        <p class="intro">Turn any link into a tiny world. Choose a season, shape your tree, and create a QR code that feels like it belongs to you.</p>
+        <label class="field-label" for="payload">Your link or message</label>
+        <input id="payload" type="text" value="https://www.arnavbule.in" placeholder="https://..." autocomplete="off" />
+        <label class="field-label">Season</label>
+        <div class="theme-row"><button class="theme selected" data-theme="spring">Spring</button><button class="theme" data-theme="summer">Summer</button><button class="theme" data-theme="autumn">Autumn</button><button class="theme" data-theme="winter">Winter</button></div>
+        <label class="field-label">Leaf color</label>
+        <div class="swatches"><button class="swatch selected" data-color="#1f9b68" style="background:#1f9b68"></button><button class="swatch" data-color="#79b85a" style="background:#79b85a"></button><button class="swatch" data-color="#e98655" style="background:#e98655"></button><button class="swatch" data-color="#c85b62" style="background:#c85b62"></button><button class="swatch" data-color="#628cc4" style="background:#628cc4"></button><button class="swatch" data-color="#9a79ba" style="background:#9a79ba"></button></div>
+        <label class="field-label">Tree density</label>
+        <div class="range-row"><input id="density" type="range" min="1" max="5" value="3" /><span id="densityValue">Balanced</span></div>
+        <label class="field-label">QR shape</label>
+        <div class="theme-row"><button class="theme selected" data-shape="round">Soft</button><button class="theme" data-shape="square">Classic</button><button class="theme" data-shape="diamond">Diamond</button></div>
+        <div class="status" id="status"></div>
+      </section>
+      <section class="stage"><div class="stage-inner"><div class="season-tag" id="seasonTag">Spring / new beginnings</div><canvas id="qrCanvas" width="900" height="900"></canvas><div class="caption">Scan it. Something beautiful is waiting.</div><div class="actions"><button class="primary" id="download">Download PNG ↓</button><button class="secondary" id="copy">Copy link</button></div></div></section>
+    </main>
+    <footer><span>YŌSEI / LIVING QR STUDIO</span><span>Made for the curious</span></footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script>
+    const canvas=document.querySelector('#qrCanvas'),ctx=canvas.getContext('2d'), payload=document.querySelector('#payload'), statusEl=document.querySelector('#status');
+    let leaf='#1f9b68', theme='spring', shape='round', density=3;
+    const themes={spring:{tag:'Spring / new beginnings',bg:'#e5f0e5',branch:'#7ca779',accent:'#bce48d'},summer:{tag:'Summer / full of light',bg:'#edf0d9',branch:'#708c55',accent:'#f1d86f'},autumn:{tag:'Autumn / let it change',bg:'#f4e4d4',branch:'#8d644b',accent:'#e98655'},winter:{tag:'Winter / quiet wonder',bg:'#e4edf2',branch:'#6b7f89',accent:'#d8edf4'}};
+    function hexToRgb(hex){let n=parseInt(hex.slice(1),16);return[(n>>16)&255,(n>>8)&255,n&255]}
+    function roundRect(c,x,y,w,h,r){c.beginPath();c.roundRect(x,y,w,h,r);c.fill()}
+    function draw(){
+      const t=themes[theme], q=qrcode(0,'M'); let text=payload.value.trim()||'https://example.com';
+      try{q.addData(text);q.make();}catch(e){statusEl.textContent='That message is too long for this QR code.';return} statusEl.textContent='';
+      canvas.style.background=t.bg;ctx.clearRect(0,0,900,900);ctx.fillStyle=t.bg;ctx.fillRect(0,0,900,900);
+      // Soft atmosphere and a hand-drawn tree silhouette around the scan-safe QR.
+      for(let i=0;i<14+density*4;i++){let x=(i*137+79)%900,y=(i*83+110)%700,r=14+(i%4)*7;ctx.globalAlpha=.16;ctx.fillStyle=t.accent;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
+      ctx.strokeStyle=t.branch;ctx.lineWidth=24;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(450,820);ctx.bezierCurveTo(447,690,450,575,450,390);ctx.stroke();
+      ctx.lineWidth=10;for(let i=0;i<density+2;i++){let y=610-i*74;ctx.beginPath();ctx.moveTo(450,y);ctx.quadraticCurveTo(350-i*8,y-90,275-i*12,y-130);ctx.stroke();ctx.beginPath();ctx.moveTo(450,y-25);ctx.quadraticCurveTo(550+i*8,y-110,625+i*12,y-145);ctx.stroke()}
+      const n=q.getModuleCount(), pad=115, size=670, cell=size/n, rgb=hexToRgb(leaf);
+      // White quiet zone keeps the decorative composition reliably scannable.
+      ctx.fillStyle='#fff';roundRect(ctx,pad-30,pad-30,size+60,size+60,30);
+      for(let row=0;row<n;row++)for(let col=0;col<n;col++)if(q.isDark(row,col)){
+        const finder=(row<7&&col<7)||(row<7&&col>=n-7)||(row>=n-7&&col<7); let fill=finder?'#173f2d':`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;ctx.fillStyle=fill;
+        let x=pad+col*cell,y=pad+row*cell,s=cell+.35;
+        if(shape==='diamond'&&!finder){ctx.save();ctx.translate(x+s/2,y+s/2);ctx.rotate(Math.PI/4);ctx.fillRect(-s*.31,-s*.31,s*.62,s*.62);ctx.restore()}else roundRect(ctx,x,y,s,s,shape==='round'?cell*.28:1);
+      }
+      // Preserve high-contrast finder patterns on top of the themed modules.
+      [[0,0],[n-7,0],[0,n-7]].forEach(([cx,cy])=>{ctx.fillStyle='#173f2d';roundRect(ctx,pad+cx*cell,pad+cy*cell,7*cell,7*cell,cell*.7);ctx.fillStyle='#fff';roundRect(ctx,pad+(cx+1)*cell,pad+(cy+1)*cell,5*cell,5*cell,cell*.35);ctx.fillStyle='#173f2d';roundRect(ctx,pad+(cx+2)*cell,pad+(cy+2)*cell,3*cell,3*cell,cell*.2)});
+    }
+    function select(group,el){document.querySelectorAll(group).forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+    payload.addEventListener('input',draw);document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{theme=b.dataset.theme;select('[data-theme]',b);document.querySelector('.stage').style.background=themes[theme].bg;document.querySelector('#seasonTag').textContent=themes[theme].tag;draw()});
+    document.querySelectorAll('[data-color]').forEach(b=>b.onclick=()=>{leaf=b.dataset.color;select('[data-color]',b);draw()});
+    document.querySelectorAll('[data-shape]').forEach(b=>b.onclick=()=>{shape=b.dataset.shape;select('[data-shape]',b);draw()});
+    document.querySelector('#density').oninput=e=>{density=+e.target.value;document.querySelector('#densityValue').textContent=['Sparse','Light','Balanced','Lush','Wild'][density-1];draw()};
+    document.querySelector('#download').onclick=()=>{const a=document.createElement('a');a.download='yosei-qr.png';a.href=canvas.toDataURL('image/png');a.click()};
+    document.querySelector('#copy').onclick=async()=>{await navigator.clipboard.writeText(payload.value);document.querySelector('#copy').textContent='Copied ✓';setTimeout(()=>document.querySelector('#copy').textContent='Copy link',1400)};
+    document.querySelector('.stage').style.background=themes.spring.bg;draw();
+  </script>
+</body>
+</html>
