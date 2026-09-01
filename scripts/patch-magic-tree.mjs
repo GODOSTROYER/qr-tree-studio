@@ -17,21 +17,28 @@ const logoDataUri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(logoS
 let source = fs.readFileSync(file, 'utf8');
 
 // Custom palettes are exposed for Spring (0) and Winter (3), so both seasons
-// must forward the selected RGB value to the renderer.
+// must forward the selected RGB value to the renderer. This is deliberately
+// idempotent because Vercel may restore a previously patched node_modules cache.
 source = source.replace(
   'if (_0x2d9aad <= 0 || _0x153546 !== 0) {',
   'if (_0x2d9aad <= 0 || (_0x153546 !== 0 && _0x153546 !== 3)) {'
 );
 
-// Make the top-left home logo self-contained and link it to Arnav's portfolio.
+// Normalize every known top-left logo state to the embedded SVG.
 source = source
   .split('https://ppweilai.online/assets/logo.png').join(logoDataUri)
+  .split('https://arnavbule.in/assets/logo.png').join(logoDataUri)
   .split('aria-label="访问主页"').join('aria-label="Arnav Bule portfolio"');
 
-// Replace the old credits/GitHub control with Arnav's embedded portfolio brand logo.
+// Replace the original credits/GitHub control when starting from a fresh install.
 const creditsPattern = /<div ref=\{_0x4efbdf\} style=\{Te\.creditsHintWrap\}>[\s\S]*?<button type="button" aria-label="查看项目说明与开源信息"[\s\S]*?\{Ae\.info\}<\/button><\/div>/;
 const brandControl = `<div ref={_0x4efbdf} style={Te.creditsHintWrap}><a href="https://arnavbule.in" target="_blank" rel="noopener noreferrer" aria-label="Arnav Bule portfolio" title="Arnav Bule" style={{...Te.githubButton,overflow:"hidden",padding:3,display:"flex",alignItems:"center",justifyContent:"center"}}><img src="${logoDataUri}" alt="Arnav Bule" style={{width:"100%",height:"100%",objectFit:"contain",display:"block"}} /></a></div>`;
 source = source.replace(creditsPattern, brandControl);
+
+// Normalize the previous local-asset branding state restored from Vercel cache.
+source = source
+  .split('src="/arnav-bule-logo.svg"').join(`src="${logoDataUri}"`)
+  .split('src="https://www.arnavbule.me/mypic.jpeg"').join(`src="${logoDataUri}"`);
 
 const translations = new Map([
   ['默认', 'Default'],
@@ -75,7 +82,6 @@ for (const [from, to] of translations) {
   source = source.split(from).join(to);
 }
 
-// Remove legacy creator/project identifiers from anything user-visible or bundled.
 source = source
   .split('https://github.com/xscanzm/magic-tree-qr').join('https://arnavbule.in')
   .split('github.com/xscanzm/magic-tree-qr').join('arnavbule.in')
@@ -83,7 +89,6 @@ source = source
   .split('https://ppweilai.online/').join('https://arnavbule.in/')
   .split('ppweilai.online').join('arnavbule.in');
 
-// Guarantee no Han characters remain in the shipped application source.
 source = source.replace(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]+/g, '');
 
 if (/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(source)) {
@@ -95,8 +100,11 @@ if (source.includes('xscanzm') || source.includes('ppweilai.online')) {
 if (!source.includes('_0x153546 !== 3')) {
   throw new Error('Palette support patch was not applied.');
 }
-if (!source.includes('data:image/svg+xml;charset=utf-8,')) {
+if (!source.includes(logoDataUri)) {
   throw new Error('Embedded brand logo was not applied.');
+}
+if (source.includes('/arnav-bule-logo.svg') || source.includes('arnavbule.in/assets/logo.png')) {
+  throw new Error('A legacy logo path remains after patch.');
 }
 
 fs.writeFileSync(file, source);
