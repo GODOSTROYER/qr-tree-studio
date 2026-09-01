@@ -4,9 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "node scripts/patch-magic-tree.mjs",
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node scripts/patch-magic-tree.mjs && vite",
+    "build": "node scripts/patch-magic-tree.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

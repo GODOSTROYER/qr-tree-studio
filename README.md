@@ -1,8 +1,15 @@
 # QR Tree Studio
 
-This repository deploys the Magic Tree QR experience through Vite and Vercel.
+QR Tree Studio is a Vite + React/WebGPU experience for turning URLs and text into scannable 3D voxel QR trees.
 
-The upstream implementation is pinned to `xscanzm/magic-tree-qr` commit `c064f61f5adb6daf38450609c1adff937b08289d` as the npm alias `magic-tree-qr-upstream`. The local entry point imports the upstream React/WebGPU application directly, while Vite serves the upstream `public/` directory so its seasonal audio, favicons, and Open Graph image are included in production builds.
+## Features
+
+- Four seasonal tree themes
+- Custom color palettes
+- Scannable top-down QR view
+- QR image decoding by upload, paste, or drag and drop
+- Seasonal ambient audio
+- Responsive desktop and mobile UI
 
 ## Development
 
@@ -11,16 +18,14 @@ npm install
 npm run dev
 ```
 
-## Production build
+## Production
 
 ```bash
 npm run build
 ```
 
-Vercel can use the standard Vite defaults: build command `npm run build` and output directory `dist`.
+Vercel uses the standard Vite output directory: `dist`.
 
-## Upstream
+## Brand
 
-Magic Tree QR: https://github.com/xscanzm/magic-tree-qr
-
-License: upstream MIT license applies to the integrated upstream application.
+QR Tree Studio by Arnav Bule — https://arnavbule.in
