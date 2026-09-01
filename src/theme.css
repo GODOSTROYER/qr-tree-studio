@@ -33,6 +33,10 @@ body {
   will-change: transform;
 }
 
+[data-qr-contrast-hint="true"] {
+  animation-fill-mode: none !important;
+}
+
 [data-qr-brand-logo="true"] {
   transform-origin: left center;
 }
