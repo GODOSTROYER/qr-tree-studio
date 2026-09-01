@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 545" role="img" aria-label="AB logo">
+  <defs>
+    <linearGradient id="gradA" x1="120" y1="535" x2="340" y2="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B78F5"/>
+      <stop offset="0.42" stop-color="#10A9D0"/>
+      <stop offset="0.72" stop-color="#0EC98F"/>
+      <stop offset="1" stop-color="#08CD35"/>
+    </linearGradient>
+
+    <linearGradient id="gradATail" x1="330" y1="120" x2="565" y2="535" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14D042"/>
+      <stop offset="0.45" stop-color="#11C69B"/>
+      <stop offset="1" stop-color="#0B87C5"/>
+    </linearGradient>
+
+    <linearGradient id="gradBTop" x1="420" y1="20" x2="790" y2="310" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF0C3D"/>
+      <stop offset="0.45" stop-color="#FF2130"/>
+      <stop offset="0.82" stop-color="#FF6B14"/>
+      <stop offset="1" stop-color="#FF9808"/>
+    </linearGradient>
+
+    <linearGradient id="gradBBottom" x1="555" y1="510" x2="800" y2="315" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A53E8"/>
+      <stop offset="0.42" stop-color="#203DDB"/>
+      <stop offset="0.76" stop-color="#6540CC"/>
+      <stop offset="1" stop-color="#8236C6"/>
+    </linearGradient>
+
+    <linearGradient id="gradSlash" x1="262" y1="385" x2="385" y2="535" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFC20A"/>
+      <stop offset="1" stop-color="#FF9507"/>
+    </linearGradient>
+  </defs>
+
+  <path fill="url(#gradA)" d="M 0,535 L 305,8 L 350,88 L 88,535 Z"/>
+  <path fill="url(#gradATail)" d="M 305,8 L 588,535 L 498,535 L 305,176 L 182,389 L 137,311 Z"/>
+  <path fill="url(#gradBTop)" fill-rule="evenodd" d="M 398,8 L 610,8 C 704,8 768,61 768,145 C 768,229 720,289 647,311 L 548,311 L 508,240 L 607,240 C 656,240 689,207 689,163 C 689,119 657,86 609,86 L 439,86 Z"/>
+  <path fill="url(#gradBBottom)" fill-rule="evenodd" d="M 646,259 C 739,277 803,335 803,424 C 803,497 750,535 654,535 L 565,535 L 520,454 L 650,454 C 696,454 725,429 725,389 C 725,350 697,326 651,326 L 606,326 Z"/>
+  <path fill="url(#gradSlash)" d="M 246,386 L 336,386 L 411,535 L 320,535 Z"/>
+</svg>

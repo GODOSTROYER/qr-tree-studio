@@ -2,10 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const file = path.resolve('node_modules/magic-tree-qr-upstream/src/main.jsx');
+const logoSource = path.resolve('assets/arnav-bule-logo.svg');
+const upstreamPublicDir = path.resolve('node_modules/magic-tree-qr-upstream/public');
+const logoDestination = path.join(upstreamPublicDir, 'arnav-bule-logo.svg');
 
 if (!fs.existsSync(file)) {
   throw new Error(`Application source not found after dependency install: ${file}`);
 }
+if (!fs.existsSync(logoSource)) {
+  throw new Error(`Brand logo source not found: ${logoSource}`);
+}
+
+fs.mkdirSync(upstreamPublicDir, { recursive: true });
+fs.copyFileSync(logoSource, logoDestination);
 
 let source = fs.readFileSync(file, 'utf8');
 
@@ -16,9 +25,9 @@ source = source.replace(
   'if (_0x2d9aad <= 0 || (_0x153546 !== 0 && _0x153546 !== 3)) {'
 );
 
-// Replace the old credits/GitHub control with Arnav's portfolio brand image.
+// Replace the old credits/GitHub control with Arnav's portfolio brand logo.
 const creditsPattern = /<div ref=\{_0x4efbdf\} style=\{Te\.creditsHintWrap\}>[\s\S]*?<button type="button" aria-label="查看项目说明与开源信息"[\s\S]*?\{Ae\.info\}<\/button><\/div>/;
-const brandControl = '<div ref={_0x4efbdf} style={Te.creditsHintWrap}><a href="https://arnavbule.in" target="_blank" rel="noopener noreferrer" aria-label="Arnav Bule" title="Arnav Bule" style={{...Te.githubButton,overflow:"hidden",padding:0}}><img src="https://www.arnavbule.me/mypic.jpeg" alt="Arnav Bule" style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%",display:"block"}} /></a></div>';
+const brandControl = '<div ref={_0x4efbdf} style={Te.creditsHintWrap}><a href="https://arnavbule.in" target="_blank" rel="noopener noreferrer" aria-label="Arnav Bule portfolio" title="Arnav Bule" style={{...Te.githubButton,overflow:"hidden",padding:3,display:"flex",alignItems:"center",justifyContent:"center"}}><img src="/arnav-bule-logo.svg" alt="Arnav Bule" style={{width:"100%",height:"100%",objectFit:"contain",display:"block"}} /></a></div>';
 source = source.replace(creditsPattern, brandControl);
 
 const translations = new Map([
@@ -83,6 +92,9 @@ if (source.includes('xscanzm') || source.includes('ppweilai.online')) {
 if (!source.includes('_0x153546 !== 3')) {
   throw new Error('Palette support patch was not applied.');
 }
+if (!fs.existsSync(logoDestination)) {
+  throw new Error('Brand logo was not copied into the production public directory.');
+}
 
 fs.writeFileSync(file, source);
-console.log('Applied QR Tree Studio palette, English UI, and branding patches.');
+console.log('Applied QR Tree Studio palette, English UI, and portfolio branding patches.');
