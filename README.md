@@ -1,52 +1,26 @@
-# Yōsei — Living QR Studio
+# QR Tree Studio
 
-Yōsei turns a URL or short message into a decorative, scan-friendly QR code framed by a growing seasonal tree. It is a lightweight, dependency-free static web app with a calm visual interface and no backend.
+This repository deploys the Magic Tree QR experience through Vite and Vercel.
 
-## Features
+The upstream implementation is pinned to `xscanzm/magic-tree-qr` commit `c064f61f5adb6daf38450609c1adff937b08289d` as the npm alias `magic-tree-qr-upstream`. The local entry point imports the upstream React/WebGPU application directly, while Vite serves the upstream `public/` directory so its seasonal audio, favicons, and Open Graph image are included in production builds.
 
-- Live QR generation for URLs and short text messages
-- Spring, Summer, Autumn, and Winter visual themes
-- Six leaf colour palettes
-- Sparse-to-wild tree density control
-- Soft, Classic, and Diamond QR module shapes
-- Download the generated artwork as a PNG
-- Copy the current link or message to the clipboard
-- Responsive layout for desktop and mobile screens
-- White quiet zone and high-contrast finder patterns for reliable scanning
-
-## Run locally
-
-Because the app is static, it can be opened directly in a browser. A local HTTP server is recommended so browser APIs such as clipboard access work consistently:
+## Development
 
 ```bash
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Then open <http://localhost:8080> from this directory.
+## Production build
 
-## Deployment
+```bash
+npm run build
+```
 
-The project can be deployed to any static hosting provider, including Vercel, Netlify, GitHub Pages, or Cloudflare Pages. No build command or environment variables are required.
+Vercel can use the standard Vite defaults: build command `npm run build` and output directory `dist`.
 
-For Vercel, import this repository and use these settings:
+## Upstream
 
-- Framework preset: **Other**
-- Build command: leave empty
-- Output directory: `.`
-- Install command: leave empty
+Magic Tree QR: https://github.com/xscanzm/magic-tree-qr
 
-## Technology
-
-- Semantic HTML
-- CSS with responsive layout and custom visual styling
-- Vanilla JavaScript
-- HTML Canvas for the illustrated QR composition
-- [`qrcode-generator`](https://github.com/kazuhikoarase/qrcode-generator) loaded from jsDelivr
-
-## Notes
-
-The QR payload is generated entirely in the browser. Nothing entered into the app is sent to an application server. Very long messages may exceed the capacity of the selected QR version and will be rejected with an inline status message.
-
-## License
-
-No license has been selected yet. Add one before accepting external contributions or redistributing the project.
+License: upstream MIT license applies to the integrated upstream application.
