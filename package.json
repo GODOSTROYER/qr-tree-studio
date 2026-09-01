@@ -9,8 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "magic-tree-qr-upstream": "github:xscanzm/magic-tree-qr#c064f61f5adb6daf38450609c1adff937b08289d",
+    "qr-tree-engine": "github:xscanzm/magic-tree-qr#c064f61f5adb6daf38450609c1adff937b08289d",
     "jsqr": "^1.4.0",
+    "lucide-react": "^0.454.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

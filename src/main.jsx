@@ -1,2 +1,2 @@
-import 'magic-tree-qr-upstream/main.css';
-import 'magic-tree-qr-upstream/src/main.jsx';
+import 'qr-tree-engine/main.css';
+import 'qr-tree-engine/src/main.jsx';
