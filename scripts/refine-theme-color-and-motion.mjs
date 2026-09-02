@@ -99,6 +99,9 @@ if (!source.includes('qr-tree-studio-deferred-color-scheme')) {
     'remove immediate root color-scheme switch'
   );
 }
+// Strip any additional style-object copy of the discrete native color scheme.
+// The deferred document-level assignment above is the only remaining switch.
+source = source.replace(/\n\s*colorScheme:\s*_qrResolvedTheme,?/g, '');
 
 const requiredFragments = [
   'qr-tree-studio-preserve-colored-qr-modules',
