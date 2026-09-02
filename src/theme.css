@@ -53,6 +53,16 @@ body {
   }
 }
 
+@keyframes qrSnapshotThemeIn {
+  from {
+    opacity: 0.86;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media (hover: hover) {
   [data-qr-theme-toggle="true"]:hover,
   [data-qr-help-button="true"]:hover {
