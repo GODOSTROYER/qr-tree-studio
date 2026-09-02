@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs && vite",
-    "build": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs && vite build",
+    "dev": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs && node scripts/refine-qr-glow-and-winter.mjs && vite",
+    "build": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs && node scripts/refine-qr-glow-and-winter.mjs && vite build",
     "preview": "vite preview",
-    "verify:qr-theme": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs"
+    "verify:qr-theme": "node scripts/patch-magic-tree.mjs && node scripts/apply-adaptive-theme.mjs && node scripts/refine-manual-theme.mjs && node scripts/apply-qr-material-theme.mjs && node scripts/refine-theme-color-and-motion.mjs && node scripts/apply-dark-qr-scannability.mjs && node scripts/refine-qr-glow-and-winter.mjs"
   },
   "dependencies": {
     "qr-tree-engine": "github:xscanzm/magic-tree-qr#c064f61f5adb6daf38450609c1adff937b08289d",
