@@ -49,16 +49,8 @@ if (!source.includes('qr-tree-studio-preserve-leaf-petal-color')) {
 // The contrast hint must describe the final material behavior. Since the
 // colored module is no longer recolored by theme, evaluate its original color.
 if (!source.includes('qr-tree-studio-contrast-uses-stable-leaf-color')) {
-  const advisoryBefore = `  const _qrDarkModuleColor = _qrTheme => {
-    const _qrSourceLuma = Math.max(_qrDisplayLuma(_qrTreeColor), 0.01);
-    const _qrTargetLuma = _qrTheme === "dark" ? 0.105 : 0.25;
-    return _qrTreeColor.map(_qrChannel =>
-      _qrClampChannel(Math.min(0.31, Math.max(0.025, _qrChannel / _qrSourceLuma * _qrTargetLuma)))
-    );
-  };`;
-  const advisoryAfter = `  /* qr-tree-studio-contrast-uses-stable-leaf-color */
-  const _qrDarkModuleColor = _qrTheme =>
-    _qrTreeColor.map(_qrChannel => _qrClampChannel(_qrChannel));`;
+  const advisoryBefore = `  const _qrDarkModuleColor = _qrTheme => {\n    const _qrSourceLuma = Math.max(_qrDisplayLuma(_qrTreeColor), 0.01);\n    const _qrTargetLuma = _qrTheme === "dark" ? 0.105 : 0.25;\n    return _qrTreeColor.map(_qrChannel =>\n      _qrClampChannel(Math.min(0.31, Math.max(0.025, _qrChannel / _qrSourceLuma * _qrTargetLuma)))\n    );\n  };`;
+  const advisoryAfter = `  /* qr-tree-studio-contrast-uses-stable-leaf-color */\n  const _qrDarkModuleColor = _qrTheme =>\n    _qrTreeColor.map(_qrChannel => _qrClampChannel(_qrChannel));`;
   replaceOnce(advisoryBefore, advisoryAfter, 'contrast advisory for stable leaf colors');
 }
 
@@ -66,11 +58,8 @@ if (!source.includes('qr-tree-studio-contrast-uses-stable-leaf-color')) {
 // rather than one effect phase later. This keeps UI and scene motion together.
 if (!source.includes('qr-tree-studio-synchronized-theme-motion')) {
   replaceOnce(
-    `  (0, m.useEffect)(() => {
-    if (_qrThemeAnimationRef.current) {`,
-    `  /* qr-tree-studio-synchronized-theme-motion */
-  (0, m.useLayoutEffect)(() => {
-    if (_qrThemeAnimationRef.current) {`,
+    `  (0, m.useEffect)(() => {\n    if (_qrThemeAnimationRef.current) {`,
+    `  /* qr-tree-studio-synchronized-theme-motion */\n  (0, m.useLayoutEffect)(() => {\n    if (_qrThemeAnimationRef.current) {`,
     'layout-synchronized theme animation'
   );
 }
@@ -101,18 +90,11 @@ for (const [before, after] of synchronizedTimingReplacements) {
 if (!source.includes('qr-tree-studio-deferred-color-scheme')) {
   replaceOnce(
     '    document.documentElement.style.colorScheme = _qrResolvedTheme;',
-    `    /* qr-tree-studio-deferred-color-scheme */
-    const _qrPendingColorScheme = _qrResolvedTheme;
-    window.setTimeout(() => {
-      if (document.documentElement.dataset.qrTheme === _qrPendingColorScheme) {
-        document.documentElement.style.colorScheme = _qrPendingColorScheme;
-      }
-    }, 900);`,
+    `    /* qr-tree-studio-deferred-color-scheme */\n    const _qrPendingColorScheme = _qrResolvedTheme;\n    window.setTimeout(() => {\n      if (document.documentElement.dataset.qrTheme === _qrPendingColorScheme) {\n        document.documentElement.style.colorScheme = _qrPendingColorScheme;\n      }\n    }, 900);`,
     'deferred native color scheme'
   );
   replaceOnce(
-    '      color: "var(--qr-fg)",
-      colorScheme: _qrResolvedTheme',
+    '      color: "var(--qr-fg)",\n      colorScheme: _qrResolvedTheme',
     '      color: "var(--qr-fg)"',
     'remove immediate root color-scheme switch'
   );
