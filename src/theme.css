@@ -1,3 +1,4 @@
+/* Theme-sensitive UI surfaces share the WebGPU transition timing. */
 html,
 body,
 #root {
