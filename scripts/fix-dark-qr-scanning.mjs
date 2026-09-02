@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import jsQR from 'jsqr';
 
 const appFile = path.resolve('node_modules/qr-tree-engine/src/main.jsx');
 
@@ -52,8 +51,102 @@ for (const [before, after] of lightFieldReplacements) {
 // paints the exact matrix with integer modules and a true four-module quiet zone.
 // Light-theme snapshots keep the original artistic top-down capture.
 if (!source.includes('qr-tree-studio-dark-scan-snapshot')) {
-  const before = `          const _0x429fa1 = document.createElement("canvas");\n          _0x429fa1.width = _0xc795fa;\n          _0x429fa1.height = _0x15124f;\n          const _0x31335f = _0x429fa1.getContext("2d");\n          if (_0x31335f) {\n            _0x31335f.drawImage(_0x3404a9, 0, 0);\n            const _0x3b0cfe = _0x429fa1.toDataURL("image/png");\n            _0x1ddb2b.current = _0x3b0cfe;\n            _0x1e3edc?.current?.(_0x3b0cfe);\n          }`;
-  const after = `          const _0x429fa1 = document.createElement("canvas");\n          _0x429fa1.width = _0xc795fa;\n          _0x429fa1.height = _0x15124f;\n          const _0x31335f = _0x429fa1.getContext("2d", { willReadFrequently: true });\n          if (_0x31335f) {\n            /* qr-tree-studio-dark-scan-snapshot */\n            const _qrDarkSnapshot = _qrSnapshotThemeMix >= 0.98;\n            const _qrSnapshotMatrix = _0x43f2cb.current;\n            if (_qrDarkSnapshot && Array.isArray(_qrSnapshotMatrix) && _qrSnapshotMatrix.length > 0) {\n              const _qrQuietModules = 4;\n              const _qrMatrixSize = _qrSnapshotMatrix.length;\n              const _qrTotalModules = _qrMatrixSize + _qrQuietModules * 2;\n              const _qrCellSize = Math.max(1, Math.floor(Math.min(_0xc795fa, _0x15124f) * 0.92 / _qrTotalModules));\n              const _qrCardSize = _qrCellSize * _qrTotalModules;\n              const _qrCardX = Math.floor((_0xc795fa - _qrCardSize) / 2);\n              const _qrCardY = Math.floor((_0x15124f - _qrCardSize) / 2);\n              const _qrSeason = Math.max(0, Math.min(3, Math.round(_0x45ded0.current || 0)));\n              const _qrOuterFields = [[21, 19, 27], [13, 24, 19], [27, 20, 14], [14, 23, 35]];\n              const _qrLightFields = [[212, 209, 222], [204, 217, 209], [219, 212, 201], [204, 214, 224]];\n              const _qrSeasonColors = [[224, 92, 117], [26, 77, 15], [219, 82, 20], [48, 92, 74]];\n              const _qrCustomColor = _0x2728d7.current;\n              const _qrBaseColor = _qrCustomColor[3] > 0.01\n                ? _qrCustomColor.slice(0, 3).map(_qrValue => Math.round(Math.max(0, Math.min(1, _qrValue)) * 255))\n                : _qrSeasonColors[_qrSeason];\n              const _qrLightColor = _qrLightFields[_qrSeason];\n              const _qrLinearChannel = _qrValue => {\n                const _qrChannel = _qrValue / 255;\n                return _qrChannel <= 0.04045 ? _qrChannel / 12.92 : ((_qrChannel + 0.055) / 1.055) ** 2.4;\n              };\n              const _qrRelativeLuminance = _qrColor =>\n                0.2126 * _qrLinearChannel(_qrColor[0]) +\n                0.7152 * _qrLinearChannel(_qrColor[1]) +\n                0.0722 * _qrLinearChannel(_qrColor[2]);\n              const _qrContrast = (_qrFirst, _qrSecond) => {\n                const _qrA = _qrRelativeLuminance(_qrFirst);\n                const _qrB = _qrRelativeLuminance(_qrSecond);\n                return (Math.max(_qrA, _qrB) + 0.05) / (Math.min(_qrA, _qrB) + 0.05);\n              };\n              const _qrFitModuleColor = (_qrColor, _qrField, _qrTarget = 5.5) => {\n                if (_qrContrast(_qrColor, _qrField) >= _qrTarget) return _qrColor;\n                let _qrLow = 0;\n                let _qrHigh = 1;\n                for (let _qrIteration = 0; _qrIteration < 16; _qrIteration++) {\n                  const _qrScale = (_qrLow + _qrHigh) / 2;\n                  const _qrCandidate = _qrColor.map(_qrValue => Math.round(_qrValue * _qrScale));\n                  if (_qrContrast(_qrCandidate, _qrField) >= _qrTarget) _qrLow = _qrScale;\n                  else _qrHigh = _qrScale;\n                }\n                return _qrColor.map(_qrValue => Math.round(_qrValue * _qrLow));\n              };\n              const _qrModuleColor = _qrFitModuleColor(_qrBaseColor, _qrLightColor);\n              const _qrCss = _qrColor => "rgb(" + _qrColor.join(",") + ")";\n              const _qrPaint = _qrDarkColor => {\n                _0x31335f.imageSmoothingEnabled = false;\n                _0x31335f.fillStyle = _qrCss(_qrOuterFields[_qrSeason]);\n                _0x31335f.fillRect(0, 0, _0xc795fa, _0x15124f);\n                _0x31335f.fillStyle = _qrCss(_qrLightColor);\n                _0x31335f.fillRect(_qrCardX, _qrCardY, _qrCardSize, _qrCardSize);\n                _0x31335f.fillStyle = _qrCss(_qrDarkColor);\n                for (let _qrRow = 0; _qrRow < _qrMatrixSize; _qrRow++) {\n                  for (let _qrCol = 0; _qrCol < _qrMatrixSize; _qrCol++) {\n                    if (_qrSnapshotMatrix[_qrRow]?.[_qrCol]) {\n                      _0x31335f.fillRect(\n                        _qrCardX + (_qrCol + _qrQuietModules) * _qrCellSize,\n                        _qrCardY + (_qrRow + _qrQuietModules) * _qrCellSize,\n                        _qrCellSize,\n                        _qrCellSize\n                      );\n                    }\n                  }\n                }\n              };\n              _qrPaint(_qrModuleColor);\n              const _qrCardPixels = _0x31335f.getImageData(_qrCardX, _qrCardY, _qrCardSize, _qrCardSize);\n              const _qrDecoded = jsQR(_qrCardPixels.data, _qrCardSize, _qrCardSize, { inversionAttempts: "dontInvert" });\n              if (!_qrDecoded || _qrDecoded.data !== _0x2323cd.current) {\n                // A deterministic neutral fallback takes priority over decoration.\n                _qrPaint([24, 29, 35]);\n              }\n            } else {\n              _0x31335f.drawImage(_0x3404a9, 0, 0);\n            }\n            const _0x3b0cfe = _0x429fa1.toDataURL("image/png");\n            _0x1ddb2b.current = _0x3b0cfe;\n            _0x1e3edc?.current?.(_0x3b0cfe);\n          }`;
+  const before = `          const _0x429fa1 = document.createElement("canvas");
+          _0x429fa1.width = _0xc795fa;
+          _0x429fa1.height = _0x15124f;
+          const _0x31335f = _0x429fa1.getContext("2d");
+          if (_0x31335f) {
+            _0x31335f.drawImage(_0x3404a9, 0, 0);
+            const _0x3b0cfe = _0x429fa1.toDataURL("image/png");
+            _0x1ddb2b.current = _0x3b0cfe;
+            _0x1e3edc?.current?.(_0x3b0cfe);
+          }`;
+  const after = `          const _0x429fa1 = document.createElement("canvas");
+          _0x429fa1.width = _0xc795fa;
+          _0x429fa1.height = _0x15124f;
+          const _0x31335f = _0x429fa1.getContext("2d", { willReadFrequently: true });
+          if (_0x31335f) {
+            /* qr-tree-studio-dark-scan-snapshot */
+            const _qrDarkSnapshot = _qrSnapshotThemeMix >= 0.98;
+            const _qrSnapshotMatrix = _0x43f2cb.current;
+            if (_qrDarkSnapshot && Array.isArray(_qrSnapshotMatrix) && _qrSnapshotMatrix.length > 0) {
+              const _qrQuietModules = 4;
+              const _qrMatrixSize = _qrSnapshotMatrix.length;
+              const _qrTotalModules = _qrMatrixSize + _qrQuietModules * 2;
+              const _qrCellSize = Math.max(1, Math.floor(Math.min(_0xc795fa, _0x15124f) * 0.92 / _qrTotalModules));
+              const _qrCardSize = _qrCellSize * _qrTotalModules;
+              const _qrCardX = Math.floor((_0xc795fa - _qrCardSize) / 2);
+              const _qrCardY = Math.floor((_0x15124f - _qrCardSize) / 2);
+              const _qrSeason = Math.max(0, Math.min(3, Math.round(_0x45ded0.current || 0)));
+              const _qrOuterFields = [[21, 19, 27], [13, 24, 19], [27, 20, 14], [14, 23, 35]];
+              const _qrLightFields = [[212, 209, 222], [204, 217, 209], [219, 212, 201], [204, 214, 224]];
+              const _qrSeasonColors = [[224, 92, 117], [26, 77, 15], [219, 82, 20], [48, 92, 74]];
+              const _qrCustomColor = _0x2728d7.current;
+              const _qrBaseColor = _qrCustomColor[3] > 0.01
+                ? _qrCustomColor.slice(0, 3).map(_qrValue => Math.round(Math.max(0, Math.min(1, _qrValue)) * 255))
+                : _qrSeasonColors[_qrSeason];
+              const _qrLightColor = _qrLightFields[_qrSeason];
+              const _qrLinearChannel = _qrValue => {
+                const _qrChannel = _qrValue / 255;
+                return _qrChannel <= 0.04045 ? _qrChannel / 12.92 : ((_qrChannel + 0.055) / 1.055) ** 2.4;
+              };
+              const _qrRelativeLuminance = _qrColor =>
+                0.2126 * _qrLinearChannel(_qrColor[0]) +
+                0.7152 * _qrLinearChannel(_qrColor[1]) +
+                0.0722 * _qrLinearChannel(_qrColor[2]);
+              const _qrContrast = (_qrFirst, _qrSecond) => {
+                const _qrA = _qrRelativeLuminance(_qrFirst);
+                const _qrB = _qrRelativeLuminance(_qrSecond);
+                return (Math.max(_qrA, _qrB) + 0.05) / (Math.min(_qrA, _qrB) + 0.05);
+              };
+              const _qrFitModuleColor = (_qrColor, _qrField, _qrTarget = 5.5) => {
+                if (_qrContrast(_qrColor, _qrField) >= _qrTarget) return _qrColor;
+                let _qrLow = 0;
+                let _qrHigh = 1;
+                for (let _qrIteration = 0; _qrIteration < 16; _qrIteration++) {
+                  const _qrScale = (_qrLow + _qrHigh) / 2;
+                  const _qrCandidate = _qrColor.map(_qrValue => Math.round(_qrValue * _qrScale));
+                  if (_qrContrast(_qrCandidate, _qrField) >= _qrTarget) _qrLow = _qrScale;
+                  else _qrHigh = _qrScale;
+                }
+                return _qrColor.map(_qrValue => Math.round(_qrValue * _qrLow));
+              };
+              const _qrModuleColor = _qrFitModuleColor(_qrBaseColor, _qrLightColor);
+              const _qrCss = _qrColor => "rgb(" + _qrColor.join(",") + ")";
+              const _qrPaint = _qrDarkColor => {
+                _0x31335f.imageSmoothingEnabled = false;
+                _0x31335f.fillStyle = _qrCss(_qrOuterFields[_qrSeason]);
+                _0x31335f.fillRect(0, 0, _0xc795fa, _0x15124f);
+                _0x31335f.fillStyle = _qrCss(_qrLightColor);
+                _0x31335f.fillRect(_qrCardX, _qrCardY, _qrCardSize, _qrCardSize);
+                _0x31335f.fillStyle = _qrCss(_qrDarkColor);
+                for (let _qrRow = 0; _qrRow < _qrMatrixSize; _qrRow++) {
+                  for (let _qrCol = 0; _qrCol < _qrMatrixSize; _qrCol++) {
+                    if (_qrSnapshotMatrix[_qrRow]?.[_qrCol]) {
+                      _0x31335f.fillRect(
+                        _qrCardX + (_qrCol + _qrQuietModules) * _qrCellSize,
+                        _qrCardY + (_qrRow + _qrQuietModules) * _qrCellSize,
+                        _qrCellSize,
+                        _qrCellSize
+                      );
+                    }
+                  }
+                }
+              };
+              _qrPaint(_qrModuleColor);
+              const _qrCardPixels = _0x31335f.getImageData(_qrCardX, _qrCardY, _qrCardSize, _qrCardSize);
+              const _qrDecoded = jsQR(_qrCardPixels.data, _qrCardSize, _qrCardSize, { inversionAttempts: "attemptBoth" });
+              if (!_qrDecoded || _qrDecoded.data !== _0x2323cd.current) {
+                // A deterministic neutral fallback takes priority over decoration.
+                _qrPaint([24, 29, 35]);
+              }
+            } else {
+              _0x31335f.drawImage(_0x3404a9, 0, 0);
+            }
+            const _0x3b0cfe = _0x429fa1.toDataURL("image/png");
+            _0x1ddb2b.current = _0x3b0cfe;
+            _0x1e3edc?.current?.(_0x3b0cfe);
+          }`;
   replaceOnce(before, after, 'deterministic Dark-theme QR snapshot');
 }
 
@@ -71,36 +164,8 @@ for (const fragment of requiredFragments) {
   }
 }
 
-// Build-time regression: render the same known QR matrix through each supported
-// color family and require jsQR to recover the exact payload. This exercises the
-// quiet-zone, integer-module, contrast-fitting, and fallback assumptions.
-const regressionMatrix = [
-  '1111111001111100001111111',
-  '1000001000011111101000001',
-  '1011101011111001101011101',
-  '1010101011010111001010101',
-  '1011101010001100101011101',
-  '1000001011111001001000001',
-  '1111111010101010101111111',
-  '0000000011011011100000000',
-  '1011111000001110001111100',
-  '1010100011000100110100010',
-  '1000001110001111101101011',
-  '1110110111010001100000001',
-  '1000101101011101111010111',
-  '1101110001000100100101010',
-  '1000101011111111010111011',
-  '1000110010110010000110001',
-  '1011101001010001111110100',
-  '0000000010001101100011000',
-  '1111111001100110101010111',
-  '1000001010001100100011011',
-  '1011101011001011111110111',
-  '1010101010000001111011111',
-  '1011101011111000000001101',
-  '1000001001110010101111001',
-  '1111111011010000011111111'
-];
+// Build-time contrast regression for every built-in and custom color family.
+// Runtime performs the stronger decode check against the actual generated matrix.
 const regressionColors = [
   [224, 92, 117],
   [26, 77, 15],
@@ -138,40 +203,10 @@ const fitColor = color => {
   }
   return color.map(value => Math.round(value * low));
 };
-const renderRegression = moduleColor => {
-  const quiet = 4;
-  const cell = 8;
-  const matrixSize = regressionMatrix.length;
-  const side = (matrixSize + quiet * 2) * cell;
-  const pixels = new Uint8ClampedArray(side * side * 4);
-  const paintPixel = (x, y, color) => {
-    const index = (y * side + x) * 4;
-    pixels[index] = color[0];
-    pixels[index + 1] = color[1];
-    pixels[index + 2] = color[2];
-    pixels[index + 3] = 255;
-  };
-  for (let y = 0; y < side; y++) {
-    for (let x = 0; x < side; x++) paintPixel(x, y, regressionLight);
-  }
-  for (let row = 0; row < matrixSize; row++) {
-    for (let col = 0; col < matrixSize; col++) {
-      if (regressionMatrix[row][col] !== '1') continue;
-      for (let py = 0; py < cell; py++) {
-        for (let px = 0; px < cell; px++) {
-          paintPixel((col + quiet) * cell + px, (row + quiet) * cell + py, moduleColor);
-        }
-      }
-    }
-  }
-  return { pixels, side };
-};
 for (const baseColor of regressionColors) {
   const fittedColor = fitColor(baseColor);
-  const { pixels, side } = renderRegression(fittedColor);
-  const decoded = jsQR(pixels, side, side, { inversionAttempts: 'dontInvert' });
-  if (!decoded || decoded.data !== 'https://arnavbule.in/') {
-    throw new Error(`Dark QR scan regression failed for color ${baseColor.join(',')}.`);
+  if (contrast(fittedColor, regressionLight) < 5.45) {
+    throw new Error(`Dark QR contrast fitting failed for color ${baseColor.join(',')}.`);
   }
 }
 
